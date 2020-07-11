@@ -28,7 +28,7 @@ Recipe.deleteMany({})
   Recipe.create(newRecipe)
   .then(data => {
     console.log('Iteration 1', data.title);
-  })  
+  })
   .then( () => {
     Recipe.insertMany(data)
       .then(data => {
@@ -39,15 +39,20 @@ Recipe.deleteMany({})
       .then( () => {
         Recipe.findOneAndUpdate({ title: 'Rigatoni alla Genovese' }, { duration: 100 }, {useFindAndModify: false})
           .then(recipeUpdate => console.log('The recipe was updated correctly', recipeUpdate.title, '- Duration',  recipeUpdate.duration))
+          .catch((err) => console.log(err))
       })
       .then( () => {
         Recipe.findOneAndDelete({ title: 'Carrot Cake' }, {useFindAndModify: false})
           .then(() => {
             Recipe.countDocuments()
-            .then(number => console.log('The recipe was removed correctly, now have ', number, 'documents in db')
-            )           
-          })
+              .then(number => console.log('The recipe was removed correctly, now have ', number, 'documents in db')
+              )
+              .catch((err) => console.log(err))       
+            })
+          .catch((err) => console.log(err))
       })
+      .catch((err) => console.log(err))
   })
   .catch((err) => console.log(err))
 })
+.catch((err) => console.log(err))
